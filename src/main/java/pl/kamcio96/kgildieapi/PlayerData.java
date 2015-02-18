@@ -1,5 +1,7 @@
 package pl.kamcio96.kgildieapi;
 
+import com.google.common.base.Optional;
+
 import java.util.UUID;
 
 /**
@@ -30,16 +32,40 @@ public interface PlayerData {
     public int getKills();
 
     /**
+     * Ustawia liczbe zabic gracza
+     * @param kills zabicia
+     */
+    public void setKills(int kills);
+
+    /**
      * Zwraca liczbe smierci gracza
      * @return smierci
      */
     public int getDeaths();
 
     /**
-     * Zwraca liczbe punktow gracza
+     * Ustawia liczbe smierci gracza
+     * @param deaths smierci
+     */
+    public void setDeaths(int deaths);
+
+    /**
+     * Zwraca liczbe punktów gracza
      * @return pkt
      */
     public int getPoints();
+
+    /**
+     * Ustawia liczbe punktów gracza
+     * @param points pkt
+     */
+    public void setPoints(int points);
+
+    /**
+     * Zwraca gildie, o ile gracz ją ma
+     * @return gildia
+     */
+    public Optional<Guild> getGuild();
 
     /**
      * Zwraca liczbe sekund przez ktora gracz był na serwerze
