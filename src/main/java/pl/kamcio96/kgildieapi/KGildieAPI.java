@@ -3,11 +3,14 @@ package pl.kamcio96.kgildieapi;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 
+import com.google.common.base.Predicate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -28,7 +31,13 @@ public class KGildieAPI {
     private KGildieAPI() { }
 
     private static GuildPlugin plugin;
+    private static List<Runnable> callbackList = new ArrayList<>();
 
+    /**
+     * Inicjalizacja pluginu
+     * Powinno być wykonane po załadowaniu głównego pluginu
+     * @param plugin instancja pluginu na gildie
+     */
     public static void setPlugin(GuildPlugin plugin){
         Preconditions.checkArgument(KGildieAPI.plugin == null, "Cannot set plugin twice");
         String pluginString = plugin.getPluginName();
@@ -45,6 +54,11 @@ public class KGildieAPI {
 
         Bukkit.getLogger().log(Level.INFO, "KGildieAPI initialized!. Plugin info: " + pluginString);
         KGildieAPI.plugin = plugin;
+
+        for(Runnable callback : callbackList){
+            callback.run();
+        }
+        callbackList = null;
     }
 
     /**
@@ -109,6 +123,25 @@ public class KGildieAPI {
     public static Optional<PlayerData> getPlayerDataByUUID(UUID uid){
         Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
         return plugin.getPlayerDataByUUID(uid);
+    }
+
+    /**
+     * Callback do wykonania gdy plugin na Gildie sie zaladuje, gdy jest juz zaladowany to wykonuje sie od razu.
+     * <p>
+     *     Stworzone po to, aby pluginy wykorzystujace API nie musiały mieć 'depend' lub 'softdepend' w plugin.yml
+     *     Wystarczy dodac to co ma sie wykonać po załadowaniu pluginu ;)
+     * </p>
+     * @param callback Callback
+     * @return true gdy wykona sie odrazu, false gdy pozniej
+     */
+    public static boolean addEnableCallback(Runnable callback){
+        if(plugin != null){
+            callback.run();
+            return true;
+        } else {
+            callbackList.add(callback);
+            return false;
+        }
     }
 
 }
