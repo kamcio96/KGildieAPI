@@ -3,7 +3,6 @@ package pl.kamcio96.kgildieapi;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 
-import com.google.common.base.Predicate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -123,6 +122,14 @@ public class KGildieAPI {
     public static Optional<PlayerData> getPlayerDataByUUID(UUID uid){
         Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
         return plugin.getPlayerDataByUUID(uid);
+    }
+
+    /**
+     * @see GuildPlugin#setTagAdapter(GuildTagAdapter uid)
+     */
+    public static void setTagAdapter(GuildTagAdapter tagAdapter){
+        Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
+        plugin.setTagAdapter(tagAdapter);
     }
 
     /**

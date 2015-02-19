@@ -89,4 +89,10 @@ public interface GuildPlugin {
      */
     public Optional<String> getPluginVersion();
 
+    /**
+     * Ustawia obiekt ktory odpowiada za tworzenie tagow nad glowami graczy
+     * @param tagAdapter
+     */
+    public void setTagAdapter(GuildTagAdapter tagAdapter);
+
 }
