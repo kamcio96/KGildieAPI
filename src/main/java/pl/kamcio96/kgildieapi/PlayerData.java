@@ -1,6 +1,7 @@
 package pl.kamcio96.kgildieapi;
 
 import com.google.common.base.Optional;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -60,6 +61,12 @@ public interface PlayerData {
      * @param points pkt
      */
     public void setPoints(int points);
+
+    /**
+     * Zwraca obiekt gracza, o ile istnieje
+     * @return
+     */
+    public Optional<Player> getPlayer();
 
     /**
      * Zwraca gildie, o ile gracz ją ma
