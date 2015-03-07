@@ -1,7 +1,6 @@
 package pl.kamcio96.kgildieapi;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Widok graczy w gildi
@@ -11,7 +10,7 @@ public interface GuildPlayers {
 
     //TODO javadocs
 
-    public List<UUID> getPlayers();
+    public List<PlayerData> getPlayers();
 
     public boolean hasPlayer(PlayerData player);
 
