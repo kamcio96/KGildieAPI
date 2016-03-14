@@ -1,16 +1,13 @@
 package pl.kamcio96.kgildieapi;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import pl.kamcio96.kgildieapi.visible.Visible;
+import pl.kamcio96.kgildieapi.visible.VisibleType;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 /**
@@ -79,7 +76,7 @@ public class KGildieAPI {
     /**
      * @see GuildPlugin#getGuildByPlayer(PlayerData player)
      */
-    public static Optional<Guild> getGuildByPlayer(PlayerData player){
+    public static Optional<GuildPlayer> getGuildByPlayer(PlayerData player){
         Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
         return plugin.getGuildByPlayer(player);
     }
@@ -87,7 +84,15 @@ public class KGildieAPI {
     /**
      * @see GuildPlugin#getGuildByPlayer(org.bukkit.entity.Player player)
      */
-    public static Optional<Guild> getGuildByPlayer(Player player){
+    public static Optional<GuildPlayer> getGuildByPlayer(Player player){
+        Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
+        return plugin.getGuildByPlayer(player);
+    }
+
+    /**
+     * @see GuildPlugin#getGuildByPlayer(org.bukkit.entity.Player player)
+     */
+    public static Optional<GuildPlayer> getGuildByPlayer(UUID player){
         Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
         return plugin.getGuildByPlayer(player);
     }
@@ -125,11 +130,11 @@ public class KGildieAPI {
     }
 
     /**
-     * @see GuildPlugin#setTagAdapter(GuildTagAdapter uid)
+     * @see GuildPlugin#setVisible(Visible, VisibleType...)
      */
-    public static void setTagAdapter(GuildTagAdapter tagAdapter){
+    public static void setVisible(Visible visible, VisibleType... types) {
         Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
-        plugin.setTagAdapter(tagAdapter);
+        plugin.setVisible(visible, types);
     }
 
     /**
@@ -149,6 +154,11 @@ public class KGildieAPI {
             callbackList.add(callback);
             return false;
         }
+    }
+
+    static Guild.Builder guildBuilder() {
+        Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
+        return plugin.guildBuilder();
     }
 
 }

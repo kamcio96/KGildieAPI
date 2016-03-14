@@ -1,11 +1,12 @@
 package pl.kamcio96.kgildieapi;
 
-import com.google.common.base.Optional;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import pl.kamcio96.kgildieapi.visible.Visible;
+import pl.kamcio96.kgildieapi.visible.VisibleType;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -17,82 +18,101 @@ import java.util.UUID;
 public interface GuildPlugin {
 
     /**
+     * Usuwa podana gildie
+     * @param guild gildia
+     */
+    void deleteGuild(Guild guild, DeleteReason reason);
+
+    /**
      * Zwraca gildie na podstawie tagu, o ile jest
      * @param tag tag gildi
      * @return gildia
      */
-    public Optional<Guild> getGuildByName(String tag);
+    Optional<Guild> getGuildByName(String tag);
 
     /**
      * Zwraca gildie na podstawie lokalizacji, o ile jest
      * @param loc lokalizacja
      * @return gildia
      */
-    public Optional<Guild> getGuildByLocation(Location loc);
+    Optional<Guild> getGuildByLocation(Location loc);
 
     /**
      * Zwraca gildie na podstawie info o graczu, o ile ma on gildie
      * @param player info o graczu
      * @return gildia
      */
-    public Optional<Guild> getGuildByPlayer(PlayerData player);
+    default Optional<GuildPlayer> getGuildByPlayer(PlayerData player) {
+        return getGuildByPlayer(player.getUniqueId());
+    }
 
     /**
      * Zwraca gildie na podstawie gracza, o ile ma on gildie
      * @param player gracz
      * @return gildia
      */
-    public Optional<Guild> getGuildByPlayer(Player player);
+    default Optional<GuildPlayer> getGuildByPlayer(Player player) {
+        return getGuildByPlayer(player.getUniqueId());
+    }
+
+    /**
+     * Zwraca gildie na podstawie gracza, o ile ma on gildie
+     * @param player gracz
+     * @return gildia
+     */
+    Optional<GuildPlayer> getGuildByPlayer(UUID player);
 
     /**
      * Zwraca wszystkie istniejace gildie
      * @return gildie
      */
-    public Collection<Guild> getAllGuilds();
+    Collection<Guild> getAllGuilds();
 
     /**
      * Zwraca info o graczu na podstawie jego obiektu
      * @param player obiekt gracza
      * @return info gracza
      */
-    public PlayerData getPlayerDataByPlayer(Player player);
+    PlayerData getPlayerDataByPlayer(Player player);
 
     /**
      * Zwraca info o graczu na podstawie jego nicku, o ile jest
      * @param name nazwa gracz
      * @return info gracza
      */
-    public Optional<PlayerData> getPlayerDataByName(String name);
+    Optional<PlayerData> getPlayerDataByName(String name);
 
     /**
      * Zwraca info o graczu na podstawie jego UUID, o ile jest
      * @param uid UUID gracza
      * @return info gracza
      */
-    public Optional<PlayerData> getPlayerDataByUUID(UUID uid);
+    Optional<PlayerData> getPlayerDataByUUID(UUID uid);
 
     /**
      * Zwraca nazwe pluginu
      * @return nazwa
      */
-    public String getPluginName();
+    String getPluginName();
 
     /**
      * Zwraca autora pluginu
      * @return autor
      */
-    public Optional<String> getPluginAuthor();
+    Optional<String> getPluginAuthor();
 
     /**
      * Zwraca wersje pluginu
      * @return wersja
      */
-    public Optional<String> getPluginVersion();
+    Optional<String> getPluginVersion();
 
     /**
      * Ustawia obiekt ktory odpowiada za tworzenie tagow nad glowami graczy
-     * @param tagAdapter
+     * @param visible visible
+     * @param types types
      */
-    public void setTagAdapter(GuildTagAdapter tagAdapter);
+    void setVisible(Visible visible, VisibleType... types);
 
+    Guild.Builder guildBuilder();
 }
