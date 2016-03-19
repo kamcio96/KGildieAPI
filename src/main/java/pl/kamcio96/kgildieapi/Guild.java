@@ -1,6 +1,7 @@
 package pl.kamcio96.kgildieapi;
 
 import org.bukkit.Location;
+import org.bukkit.boss.BarColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -135,6 +136,10 @@ public interface Guild {
 
     void broadcast(String... messages);
 
+    void broadcastBar(String message, int time);
+
+    void broadcastBar(String message, BarColor color, int time);
+
     /**
      * Zwraca graczy online z gildi
      * @return Set&lt;GuildPlayer&gt; gracze online
@@ -142,6 +147,10 @@ public interface Guild {
     Set<Player> getOnlinePlayers();
 
     int getMaxPlayers();
+
+    int getAdditionalPlayers();
+
+    void setAdditionalPlayers(int additionalPlayers);
 
     /*================================================*/
 
