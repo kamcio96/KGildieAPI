@@ -22,6 +22,6 @@ public class PlayerUpdateEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return null;
+        return handlerList;
     }
 }
