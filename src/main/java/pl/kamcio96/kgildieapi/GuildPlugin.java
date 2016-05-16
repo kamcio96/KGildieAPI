@@ -1,5 +1,6 @@
 package pl.kamcio96.kgildieapi;
 
+import com.google.common.collect.ImmutableList;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import pl.kamcio96.kgildieapi.visible.Visible;
@@ -107,6 +108,10 @@ public interface GuildPlugin {
      */
     Optional<String> getPluginVersion();
 
+    ImmutableList<Guild> getTop20Guilds();
+
+    ImmutableList<PlayerData> getTop20Players();
+
     /**
      * Ustawia obiekt ktory odpowiada za tworzenie tagow nad glowami graczy
      * @param visible visible
@@ -115,4 +120,6 @@ public interface GuildPlugin {
     void setVisible(Visible visible, VisibleType... types);
 
     Guild.Builder guildBuilder();
+
+    boolean isInPVP(Player player);
 }

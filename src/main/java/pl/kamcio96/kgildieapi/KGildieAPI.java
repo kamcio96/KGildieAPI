@@ -1,6 +1,7 @@
 package pl.kamcio96.kgildieapi;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -51,9 +52,7 @@ public class KGildieAPI {
         Bukkit.getLogger().log(Level.INFO, "KGildieAPI initialized!. Plugin info: " + pluginString);
         KGildieAPI.plugin = plugin;
 
-        for(Runnable callback : callbackList){
-            callback.run();
-        }
+        callbackList.forEach(Runnable::run);
         callbackList = null;
     }
 
@@ -138,6 +137,23 @@ public class KGildieAPI {
     }
 
     /**
+     * @see GuildPlugin#getTop20Guilds()
+     */
+    public static ImmutableList<Guild> getTop20Guilds() {
+        Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
+        return plugin.getTop20Guilds();
+    }
+
+    /**
+     * @see GuildPlugin#getTop20Players()
+     */
+    public static ImmutableList<PlayerData> getTop20Players() {
+        Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
+        return plugin.getTop20Players();
+    }
+
+
+    /**
      * Callback do wykonania gdy plugin na Gildie sie zaladuje, gdy jest juz zaladowany to wykonuje sie od razu.
      * <p>
      *     Stworzone po to, aby pluginy wykorzystujace API nie musiały mieć 'depend' lub 'softdepend' w plugin.yml
@@ -159,6 +175,11 @@ public class KGildieAPI {
     static Guild.Builder guildBuilder() {
         Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
         return plugin.guildBuilder();
+    }
+
+    public static boolean isInPVP(Player player) {
+        Preconditions.checkNotNull(plugin, "Cannot use KGildieAPI before set the plugin");
+        return plugin.isInPVP(player);
     }
 
 }
